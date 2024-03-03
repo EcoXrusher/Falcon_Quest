@@ -25,9 +25,6 @@ async def WeatherFetcher(lat,long,it):
 
 
 async def WeatherProcessor(city, time, temp, rain , x, y, it):
-    # time_whole = weather["hourly"]["time"]
-    # temp_whole = weather["hourly"]["temperature_2m"]
-    # rain_whole = weather["hourly"]["rain"]
     for time, temp, rain in zip(time, temp, rain):
         if(temp < x or rain > y):
             print(f"Warning {city}, Low temperature {temp} of C and rain {rain} mm expected on {time}, iter {it}")
@@ -48,7 +45,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     import time
     s = time.perf_counter()
-    # asyncio.gather(*(AsyncioEventLoop(args.t,args.r) for  n in range(10)))
     asyncio.run(main(args.t,args.r))
     elapsed = time.perf_counter() - s
     print(f"{__file__} executed in {elapsed:0.2f} seconds.")
