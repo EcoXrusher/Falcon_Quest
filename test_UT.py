@@ -1,5 +1,6 @@
 import pytest
-from fetchr_API import WeatherFetcher, WeatherProcessor
+from WeatherFetcher import WeatherFetcher
+from WeatherProcessor import WeatherProcessor
 
 def test_WeatherFetcher():
     lat = 51.5074
