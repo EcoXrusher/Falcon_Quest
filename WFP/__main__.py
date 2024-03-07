@@ -1,17 +1,14 @@
 import argparse
 from WFP.WeatherFetcher import WeatherFetcher
 from WFP.WeatherProcessor import WeatherProcessor
-from dotenv import load_dotenv
 
 import asyncio
-load_dotenv()
 tasks = []
 
 async def caller(city,x,y,breakTime) -> None:
-    # for iter in range(10):
     while True:
         data = await WeatherFetcher(city)
-        if not data:
+        if data == {}:
             print(f"Error fetching weather data for {city}")
             return
         await WeatherProcessor(city, data["time"], data["temperature_2m"], data["rain"], x, y)
@@ -20,7 +17,6 @@ async def caller(city,x,y,breakTime) -> None:
 
 def add_task(city,temp,rain,breakTime):
     tasks.append(asyncio.create_task(caller(city,temp,rain,breakTime)))
-    # print (tasks)
 
 
 async def main():
@@ -35,8 +31,8 @@ async def main():
             break
         UserInput_breakTime = await loop.run_in_executor(None, input, "Enter break time: ")
         add_task(UserInput_city,args.t,args.r,UserInput_breakTime)
-    for each in tasks:
-        each.cancel()
+    for task in tasks:
+        task.cancel()
     await asyncio.gather(*tasks, return_exceptions=True)
 
 
