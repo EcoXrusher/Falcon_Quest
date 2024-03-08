@@ -1,5 +1,5 @@
-from WFP.WeatherFetcher import WeatherFetcher
-from WFP.WeatherProcessor import WeatherProcessor
+from WFP.WeatherFetcher import weather_fetcher
+from WFP.WeatherProcessor import weather_processor
 
 
 import argparse
@@ -10,22 +10,22 @@ import asyncio
 tasks = []
 
 
-async def caller(city,x,y,breakTime) -> None:
+async def caller(city, x, y, breakTime, loop_condition=lambda: True) -> None:
     # Loop to keep fetching the weather data in user input intervals
-    while True:
+    while loop_condition():
         # Calling Weather Fetcher
-        data = await WeatherFetcher(city)
+        data = await weather_fetcher(city)
         # Validating output
         if data == {}:
             print(f"Error fetching weather data for {city}")
             return
         # Calling Weather Processor
-        await WeatherProcessor(city, data["time"], data["temperature_2m"], data["rain"], x, y)
+        await weather_processor(city, data["time"], data["temperature_2m"], data["rain"], x, y)
         # Calling sleep with read interval time
         await asyncio.sleep(int(breakTime))
 
 
-def add_task(city,temp,rain,breakTime):
+def add_task(city, temp, rain, breakTime):
     # Adding the task to the list of tasks
     tasks.append(asyncio.create_task(caller(city,temp,rain,breakTime)))
 
@@ -38,9 +38,11 @@ async def main():
     args = parser.parse_args()
     # Taking input from the user inside the event loop
     loop = asyncio.get_event_loop()
+    print('x')
     while True:
         UserInput_city = await loop.run_in_executor(None, input, "Enter city: ")
         # Creaing exit condition
+        print(UserInput_city)
         if UserInput_city == "e":
             break
         UserInput_breakTime = await loop.run_in_executor(None, input, "Enter break time: ")

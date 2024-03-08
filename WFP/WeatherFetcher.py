@@ -1,10 +1,10 @@
 import aiohttp
 from geopy.geocoders import Nominatim
 
-async def WeatherFetcher(city) -> dict:
+async def weather_fetcher(city) -> dict:
     latitude = None
     longitude = None
-    return_data = {}
+    return_data = dict()
     # Fetching cordinates for the city
     geo_locator = Nominatim(user_agent="geoapiTaskTrial")
     location = geo_locator.geocode(city)
