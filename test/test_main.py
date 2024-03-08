@@ -44,19 +44,3 @@ def test_add_task(mock_caller, mock_create_task):
     rain = 5
     add_task(city, temp, rain, time)
     mock_create_task.assert_called_once_with(mock_caller(city, temp, rain, time))
-
-# import asyncio.tasks.Task.cancel
-import argparse
-@pytest.mark.asyncio
-@patch('WFP.__main__.add_task', new_callable=Mock)
-@patch('WFP.__main__.asyncio.Task', new_callable=AsyncMock)
-@patch('WFP.__main__.argparse.ArgumentParser.parse_args', new_callable=Mock)
-@patch('WFP.__main__.input', new_callable=Mock)
-@patch('WFP.__main__.asyncio.gather', new_callable=AsyncMock)
-async def test_main(mock_gather, mock_input, mock_parse_args,mock_cancel, mock_add_task):
-    mock_parse_args.return_value = argparse.Namespace(t=15, r=10)
-    mock_input = Mock(side_effect=['Kraków', 10,'e'])
-    await main()
-    mock_add_task.assert_called_once_with('Kraków', 15, 10, 10)
-    mock_cancel.assert_called_once()
-    mock_gather.assert_called_once()

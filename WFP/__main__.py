@@ -38,7 +38,6 @@ async def main():
     args = parser.parse_args()
     # Taking input from the user inside the event loop
     loop = asyncio.get_event_loop()
-    print('x')
     while True:
         UserInput_city = await loop.run_in_executor(None, input, "Enter city: ")
         # Creaing exit condition
