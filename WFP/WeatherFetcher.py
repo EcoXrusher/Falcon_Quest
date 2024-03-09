@@ -2,8 +2,6 @@ import aiohttp
 from geopy.geocoders import Nominatim
 
 async def weather_fetcher(city) -> dict:
-    latitude = None
-    longitude = None
     return_data = dict()
     # Fetching cordinates for the city
     geo_locator = Nominatim(user_agent="geoapiTaskTrial")
