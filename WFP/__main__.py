@@ -10,7 +10,19 @@ import asyncio
 tasks = []
 
 
-async def caller(city, x, y, breakTime, loop_condition=lambda: True) -> None:
+async def caller(city : str, x :int , y: float, breakTime : int , loop_condition=lambda: True) -> None:
+    """Caller function to fetch and process the weather data for the city provided in async loop.
+
+    Parameters:
+    city: str               - city name
+    x: int                  - temperature threshold
+    y: float                - rain threshold
+    breakTime: int          - time interval for fetching the weather data
+    loop_condition: function- function to check the condition for the loop
+
+    Returns:
+    None
+    """
     # Loop to keep fetching the weather data in user input intervals
     while loop_condition():
         # Calling Weather Fetcher
@@ -25,12 +37,29 @@ async def caller(city, x, y, breakTime, loop_condition=lambda: True) -> None:
         await asyncio.sleep(int(breakTime))
 
 
-def add_task(city, temp, rain, breakTime):
+def add_task(city : str, temp : int, rain : float, breakTime : int) -> None:
+    """Add the task to the list of tasks.
+
+    Parameters:
+    city: str               - city name
+    temp: int               - temperature threshold
+    rain: float             - rain threshold
+    breakTime: int          - time interval for fetching the weather data
+
+    Returns:
+    None
+    """
     # Adding the task to the list of tasks
     tasks.append(asyncio.create_task(caller(city,temp,rain,breakTime)))
 
 
 async def main():
+    """Main function to take input from the console, and input form user in the loop.
+    It is calling next functions to start process of fetch data and process it.
+    After providing 'e' as city input it stops tasks and allows tasks to throw excepetion.
+    Tasks are running endless loops so it is required to stop them manually and allow to throw exception.
+    
+    """
     # Parsing the arguments from the command line
     parser = argparse.ArgumentParser(description="Weather Fetcher")
     parser.add_argument("-t", type=float, help="Temperature threshold")
