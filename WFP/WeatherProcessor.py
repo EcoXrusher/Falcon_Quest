@@ -1,4 +1,4 @@
-async def weather_processor(city : str, time : list, temp : list , rain : list, temp_treshold : int, rain_treshold : int) -> None:
+async def weather_processor(city : str, time : list, temp : list , rain : list, temp_treshold : int, rain_treshold : float) -> None:
     """Procesing data from arguments.
       If temperature is lower than x or rain is higher than y, print warning message.
     
