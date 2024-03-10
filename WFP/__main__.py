@@ -10,12 +10,12 @@ import asyncio
 tasks = []
 
 
-async def caller(city : str, x :int , y: float, breakTime : int , loop_condition=lambda: True) -> None:
+async def caller(city : str, x :float , y: float, breakTime : int , loop_condition=lambda: True) -> None:
     """Caller function to fetch and process the weather data for the city provided in async loop.
 
     Parameters:
     city: str               - city name
-    x: int                  - temperature threshold
+    x: float                  - temperature threshold
     y: float                - rain threshold
     breakTime: int          - time interval for fetching the weather data
     loop_condition: function- function to check the condition for the loop
@@ -37,12 +37,12 @@ async def caller(city : str, x :int , y: float, breakTime : int , loop_condition
         await asyncio.sleep(int(breakTime))
 
 
-def add_task(city : str, temp : int, rain : float, breakTime : int) -> None:
+def add_task(city : str, temp : float , rain : float, breakTime : int) -> None:
     """Add the task to the list of tasks.
 
     Parameters:
     city: str               - city name
-    temp: int               - temperature threshold
+    temp: float               - temperature threshold
     rain: float             - rain threshold
     breakTime: int          - time interval for fetching the weather data
 
@@ -80,6 +80,7 @@ async def main():
     [task.cancel() for task in tasks]
     # Waiting for all the tasks to be cancelled
     await asyncio.gather(*tasks, return_exceptions=True)
+    print("All tasks are cancelled, Exiting...")
 
 
 if __name__== "__main__":
