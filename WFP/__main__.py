@@ -15,7 +15,7 @@ async def caller(city : str, x :float , y: float, breakTime : int , loop_conditi
 
     Parameters:
     city: str               - city name
-    x: float                  - temperature threshold
+    x: float                - temperature threshold
     y: float                - rain threshold
     breakTime: int          - time interval for fetching the weather data
     loop_condition: function- function to check the condition for the loop
